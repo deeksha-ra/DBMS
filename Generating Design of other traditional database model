@@ -1,0 +1,17 @@
+2. a Identify the specificity of each relationship, find and form surplus relations.
+2. b Check is-a hierarchy/has-a hierarchy and performs generalization and/or specialization relationship.
+2. c Find the domain of the attribute and perform check constraint to the applicable.
+2. d Rename the relations.
+2. e Perform SQL Relations using DDL, DCL commands.
+2. a Identify the specificity of each relationship, find and form surplus relations.
+
+
+ALTER TABLE Player ADD CONSTRAINT check_con CHECK (age>= 20);
+Alter table Umpire RENAME column contact_no TO phone_no;
+create user Raj identified by kumar;
+grant resource to raj;
+grant create session to raj;
+conn
+create table emp(eno number,ename varchar(10));
+conn system/manager
+grant all on Umpire to Raj;
