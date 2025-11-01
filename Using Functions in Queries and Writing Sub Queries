@@ -1,0 +1,12 @@
+1.	To retrieve all team details, including the count of winning matches for each team
+2.	To retrieve the total number of 'Tie' matches in a team-wise manner.
+3.	To retrieve the team details who won the matches.
+4.	To retrieve players and match details of players who are above 25 years old. 
+5.	To retrieve the details of Team who have not played any matches.
+6.	To retrieve the teamid, boardid, teamname, and playername for a particular playerid given.
+SELECT t.TeamID, t.Name AS TeamName, t.Coach, t.Captain, COUNT(m.MatchID) AS WinningMatchCount FROM Team t LEFT JOIN Match m ON t.TeamID = substr(m.result,1,5) GROUP BY t.TeamID, t.Name, t.Coach, t.Captain;
+SELECT t.Name AS TeamName, COUNT(*) AS TotalTieMatches FROM Team t JOIN Match_result mt ON t.TeamID = mt.TeamID JOIN Match_result m ON mt.MatchID = m.MatchID WHERE m.Result = 'Tie' GROUP BY t.Name;
+select * from team where teamID in (select mr.teamID from match_result mr left join team t on mr.teamId=t.teamID where mr.result='Win');
+SELECT p.PlayerID, p.FName AS PlayerName, p.Age, m.MatchID, m.match_Date, m.Time1, m.Result FROM Player p, match m where p.playerID in(select playerID from player where age>25);
+select * from team where teamID not in(select teamid from match Union select playerId from match);
+SELECT t.teamid, t.boardid, t.name, p.fname FROM team t JOIN player p ON t.teamid = p.teamid WHERE p.playerid = '66';
