@@ -1,0 +1,25 @@
+Entities:
+1. Customer
+2. Product
+3. Cart
+4. Order
+5. Payment
+CREATE TABLE Customer (customer_id INT PRIMARY KEY AUTO_INCREMENT,name VARCHAR(100),email VARCHAR(100) UNIQUE,phone VARCHAR(15),address TEXT);
+
+CREATE TABLE Product (product_id INT PRIMARY KEY AUTO_INCREMENT,product_name VARCHAR(100),category VARCHAR(50),price DECIMAL(10,2),stock INT);
+
+CREATE TABLE Cart (cart_id INT PRIMARY KEY AUTO_INCREMENT,customer_id INT,created_at DATETIME DEFAULT CURRENT_TIMESTAMP,FOREIGN KEY (customer_id) REFERENCES Customer(customer_id));
+
+CREATE TABLE Orders (order_id INT PRIMARY KEY AUTO_INCREMENT,customer_id INT,order_date DATETIME DEFAULT CURRENT_TIMESTAMP, total_amount DECIMAL(10,2), FOREIGN KEY (customer_id) REFERENCES Customer(customer_id));
+
+CREATE TABLE Payment (payment_id INT PRIMARY KEY AUTO_INCREMENT, order_id INT, payment_date DATETIME DEFAULT CURRENT_TIMESTAMP, payment_method VARCHAR(50), amount DECIMAL(10,2), FOREIGN KEY (order_id) REFERENCES Orders(order_id));
+
+INSERT INTO Customer (name, email, phone, address)
+VALUES ('Riya Sharma', 'riya@gmail.com', '9876543210', 'Delhi, India');
+
+INSERT INTO Product (product_name, category, price, stock) VALUES ('Laptop', 'Electronics', 55000, 10), ('Headphones', 'Electronics', 1500, 25), ('Shoes', 'Fashion', 2500, 30);
+
+SELECT * FROM Product;
+SELECT c.name, o.order_id, o.total_amount, o.order_date FROM Customer cJOIN Orders o ON c.customer_id = o.customer_id;
+SELECT SUM(total_amount) AS total_revenue FROM Orders;
+SELECT product_name, stock FROM Product WHERE stock < 5;
