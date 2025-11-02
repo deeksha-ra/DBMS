@@ -1,0 +1,60 @@
+CricketBoard(BoardID, Name, Address, Contact_No,  TeamID, TName,	Coach,	Captain, PlayerID, PFName, PLName, Age, PDateofBirth, PlayingRole, email, contact_no, Batting, Bowling, MatchID, Match_Date, Time1, Result, GroundID, GName, Location, Capacity, UmpireID, UFName, ULName, UAge, UDateofBirth, Country, Uemail, Ucontact_no).
+
+Functional Dependency:
+
+BoardID → Name, Address, Contact_No
+TeamID → TName, Coach, Captain
+PlayerID → PFName, PLName, Age, PDateofBirth, PlayingRole, email, contact_no, Batting, Bowling
+MatchID → Match_Date, Time1, Result, GroundID
+GroundID → GName, Location, Capacity
+UmpireID → UFName, ULName, UAge, UDateofBirth, Country, Uemail, Ucontact_no
+
+create simplified tables:
+CricketBoard (BoardID [PK], Name, Address, Contact_No)
+CricketTeam (TeamID [PK], TName, Coach, Captain)
+CricketPlayer (PlayerID [PK], TeamID [FK], PFName, PLName, Age, PDateofBirth, PlayingRole, email, contact_no, Batting, Bowling)
+CricketMatch (MatchID [PK], TeamID [FK], Match_Date, Time1, Result, GroundID [FK])
+CricketGround (GroundID [PK], GName, Location, Capacity)
+CricketUmpire (UmpireID [PK], UFName, ULName, UAge, UDateofBirth, Country, Uemail, Ucontact_no)
+
+First Normal Form:
+Based on the provided relation, it appears that each attribute already contains atomic values, so there are no repeating groups to eliminate.
+
+Second Normal Form:
+The relation must already be in 1NF (First Normal Form).
+All non-prime attributes (attributes not part of any candidate key) must be fully functionally dependent on the entire primary key.
+
+It appears that the potential candidate keys could be:
+1.	BoardID
+2.	TeamID
+3.	PlayerID
+4.	MatchID
+5.	UmpireID
+
+we need to check if all non-prime attributes are fully functionally dependent on their respective candidate key(s).
+
+Third Normal Form:
+To determine whether the given relation is in the Third Normal Form (3NF), need to check two conditions:
+1.	The relation must already be in the Second Normal Form (2NF).
+2.	There should be no transitive dependencies between non-prime attributes and candidate keys.
+
+BoardID → Name, Address, Contact_No
+There are no transitive dependencies in this case, as Name, Address, and Contact_No are directly dependent on BoardID.
+
+TeamID → TName, Coach, Captain
+There are no transitive dependencies here either, as TName, Coach, and Captain are directly dependent on TeamID.
+
+PlayerID → PFName, PLName, Age, PDateofBirth, PlayingRole, email, contact_no, Batting, Bowling
+There are no transitive dependencies for PlayerID, as all the mentioned attributes are directly dependent on PlayerID.
+
+MatchID → Match_Date, Time1, Result, GroundID
+There is a transitive dependency between MatchID and GroundID through the Result attribute. To resolve this, we create a new table called MatchVenue:
+MatchVenue (MatchID [PK], GroundID [FK])
+
+GroundID → GName, Location, Capacity
+There are no transitive dependencies for GroundID, as GName, Location, and Capacity are directly dependent on GroundID.
+
+UmpireID → UFName, ULName, UAge, UDateofBirth, Country, Uemail, Ucontact_no
+There are no transitive dependencies for UmpireID, as UFName, ULName, UAge, UDateofBirth, Country, Uemail, and Ucontact_no are directly dependent on UmpireID.
+
+With the introduction of the MatchVenue table to resolve the transitive dependency, the relation now satisfies the conditions of the Third Normal Form (3NF).
